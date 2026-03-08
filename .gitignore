@@ -1,0 +1,23 @@
+#Terraform dir  
+.terraform/   
+
+#Terraform state files 
+*.tfstate
+*.tfstate.*
+
+#TF Var Values 
+*.tfvars
+*.tfvars.json
+
+#Terraform plan files 
+*.tfplan
+
+#S3 backend config file
+state.config
+
+#Terraform lock info
+terraform.tfstate.lock.info 
+
+#Crash Logs
+crash.log
+
