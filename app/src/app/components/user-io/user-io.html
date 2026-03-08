@@ -1,0 +1,4 @@
+<div class="flex flex-col gap-5">
+    <app-emulator-display [displayBuffer]="dBuffer" (synchronizationEvent)="synchronizationEventHandler($event)"></app-emulator-display>
+    <app-emulator-controls (newFileEvent)= "newFileEventHandler($event)"></app-emulator-controls>
+</div>
