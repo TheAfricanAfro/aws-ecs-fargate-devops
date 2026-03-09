@@ -49,9 +49,14 @@ resource "aws_ecs_service" "project_service" {
   desired_count   = 1
   launch_type     = "FARGATE"
 
+  network_configuration {
+    subnets          = [aws_subnet.project_vpc_subnet_private_2a.id, aws_subnet.project_vpc_subnet_private_2b.id]
+    security_groups  = [aws_security_group.project_ecs_sg.id]
+    assign_public_ip = false
+  }
 
   load_balancer {
-    target_group_arn = aws_lb.project_application_lb.arn
+    target_group_arn = aws_lb_target_group.project_tg.arn
     container_name   = "project-container"
     container_port   = 4000
   }
