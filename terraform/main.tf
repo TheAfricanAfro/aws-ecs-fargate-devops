@@ -6,19 +6,19 @@ terraform {
     }
   }
 
-   #Partial config of s3 backend
-   backend "s3" {
-    bucket = "" 
-    key    = ""
-    region = ""
+  #Partial config of s3 backend
+  backend "s3" {
+    bucket       = ""
+    key          = ""
+    region       = ""
     use_lockfile = true
-    encrypt = true
+    encrypt      = true
   }
 
 }
 
 provider "aws" {
-    region = var.region
+  region = var.region
 }
 
 
