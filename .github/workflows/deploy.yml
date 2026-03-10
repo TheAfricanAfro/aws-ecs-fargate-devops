@@ -41,8 +41,8 @@ jobs:
         uses: aws-actions/amazon-ecs-deploy-task-definition@v2
         with:
           task-definition: task-definition.json
-          service: my-service
-          cluster: my-cluster
+          service: project-service
+          cluster: project-cluster
           wait-for-service-stability: true
 
 
