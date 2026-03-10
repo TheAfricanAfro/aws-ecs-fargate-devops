@@ -12,10 +12,6 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      #We need to use this
-      - name: Amazon ECS "Deploy Task Definition" Action for GitHub Actions
-        uses: aws-actions/amazon-ecs-deploy-task-definition@v2.6.0
-
-
-
-
+      - name: Fetch Code
+        uses: actions/checkout@v3
+      - name: 
