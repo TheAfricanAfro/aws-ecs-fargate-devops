@@ -1,6 +1,6 @@
 #Creating exec role to prep
 resource "aws_iam_role" "ecs_task_execution_role" {
-  name = "project-ecs-execution-roletest_role"
+  name = "project-ecs-execution-role"
 
   assume_role_policy = jsonencode({
     Version = "2008-10-17"
@@ -17,7 +17,7 @@ resource "aws_iam_role" "ecs_task_execution_role" {
   })
 
   tags = {
-    Name = "project-ecs-execution-roletest_role"
+    Name = "project-ecs-execution-role"
   }
 }
 
