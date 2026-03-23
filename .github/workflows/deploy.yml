@@ -36,7 +36,10 @@ jobs:
           IMAGE_TAG: ${{ github.sha }} #SHA gives each image a unique tag
         run: |
           docker build -t $REGISTRY/$REPOSITORY:$IMAGE_TAG ./app
-          docker push $REGISTRY/$REPOSITORY:$IMAGE_TAG  
+          docker push $REGISTRY/$REPOSITORY:$IMAGE_TAG
+          docker tag $REGISTRY/$REPOSITORY:$IMAGE_TAG $REGISTRY/$REPOSITORY:latest
+          docker push $REGISTRY/$REPOSITORY:latest
+          
       - name: Deploy to Amazon ECS
         uses: aws-actions/amazon-ecs-deploy-task-definition@v2
         with:
