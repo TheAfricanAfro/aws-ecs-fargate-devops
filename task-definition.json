@@ -1,9 +1,9 @@
 {
-    "taskDefinitionArn": "arn:aws:ecs:us-east-2:459742122604:task-definition/project-task:1",
+    "taskDefinitionArn": "arn:aws:ecs:us-east-2:459742122604:task-definition/project-task:12",
     "containerDefinitions": [
         {
             "name": "project-container",
-            "image": "459742122604.dkr.ecr.us-east-2.amazonaws.com/archiveaaaada/devops-project2:latest",
+            "image": "459742122604.dkr.ecr.us-east-2.amazonaws.com/production/project-repo:latest",
             "cpu": 0,
             "portMappings": [
                 {
@@ -20,9 +20,9 @@
         }
     ],
     "family": "project-task",
-    "executionRoleArn": "arn:aws:iam::459742122604:role/project-ecs-execution-roletest_role",
+    "executionRoleArn": "arn:aws:iam::459742122604:role/project-ecs-execution-role",
     "networkMode": "awsvpc",
-    "revision": 1,
+    "revision": 12,
     "volumes": [],
     "status": "ACTIVE",
     "requiresAttributes": [
@@ -42,14 +42,14 @@
     "placementConstraints": [],
     "compatibilities": [
         "EC2",
-        "FARGATE",
-        "MANAGED_INSTANCES"
+        "MANAGED_INSTANCES",
+        "FARGATE"
     ],
     "requiresCompatibilities": [
         "FARGATE"
     ],
     "cpu": "512",
     "memory": "3072",
-    "registeredAt": "2026-03-09T07:14:53.431000-04:00",
+    "registeredAt": "2026-04-11T20:13:30.945000-04:00",
     "registeredBy": "arn:aws:iam::459742122604:user/terraform"
 }
