@@ -54,7 +54,7 @@ resource "aws_subnet" "project_vpc_subnet_private_2b" {
 }
 
 
-#Creates igw 
+#Creates an igw 
 resource "aws_internet_gateway" "project_vpc_igw" {
   vpc_id = aws_vpc.project_vpc.id
 
