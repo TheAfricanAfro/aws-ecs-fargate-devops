@@ -8,7 +8,6 @@ resource "aws_vpc" "project_vpc" {
 }
 
 #Creates a public subnet in us-east-2 az a
-
 resource "aws_subnet" "project_vpc_subnet_public_2a" {
   vpc_id                  = aws_vpc.project_vpc.id
   cidr_block              = var.subnet_cidr_public_2a
@@ -64,22 +63,45 @@ resource "aws_internet_gateway" "project_vpc_igw" {
   }
 }
 
-#Creates an elastic ip
-resource "aws_eip" "project_vpc_eip" {
+#Creates an elastic ip for Nat GW in AZ A
+resource "aws_eip" "nat_gw_2a" {
   domain = "vpc"
 
   tags = {
-    Name = "project-nat-eip"
+    Name = "project-nat-eip-2a"
   }
 }
 
-#Creates NAT GW
-resource "aws_nat_gateway" "project_nat_gw" {
-  allocation_id = aws_eip.project_vpc_eip.id
+#Creates an elastic ip for Nat GW in AZ B
+resource "aws_eip" "nat_gw_2b" {
+  domain = "vpc"
+
+  tags = {
+    Name = "project-nat-eip-2b"
+  }
+}
+
+
+#Creates a NAT GW in AZ A
+resource "aws_nat_gateway" "project_nat_gw_2a" {
+  allocation_id = aws_eip.nat_gw_2a.id
   subnet_id     = aws_subnet.project_vpc_subnet_public_2a.id
 
   tags = {
-    Name = "project-nat-gw"
+    Name = "project-nat-gw-2a"
+  }
+
+  # Terraform Documentation advises to include depends_on, in order to ensure proper ordering
+  depends_on = [aws_internet_gateway.project_vpc_igw]
+}
+
+#Creates a NAT GW in AZ B
+resource "aws_nat_gateway" "project_nat_gw_2b" {
+  allocation_id = aws_eip.nat_gw_2b.id
+  subnet_id     = aws_subnet.project_vpc_subnet_public_2b.id
+
+  tags = {
+    Name = "project-nat-gw-2b"
   }
 
   # Terraform Documentation advises to include depends_on, in order to ensure proper ordering
@@ -87,7 +109,7 @@ resource "aws_nat_gateway" "project_nat_gw" {
 }
 
 
-# Creates a RT public
+# Creates a RT for our public subnets
 resource "aws_route_table" "project_public_routing_table" {
   vpc_id = aws_vpc.project_vpc.id
 
@@ -103,18 +125,32 @@ resource "aws_route_table" "project_public_routing_table" {
 }
 
 
-#Creates a RT Private
-resource "aws_route_table" "project_private_routing_table" {
+#RT for Private Subnet in AZ a
+resource "aws_route_table" "rt_private_2a" {
   vpc_id = aws_vpc.project_vpc.id
 
   route {
     cidr_block     = "0.0.0.0/0"
-    nat_gateway_id = aws_nat_gateway.project_nat_gw.id
+    nat_gateway_id = aws_nat_gateway.project_nat_gw_2a.id
   }
 
 
   tags = {
-    Name = "project-private-routing-table"
+    Name = "project-private-routing-table-2a"
+  }
+}
+
+#RT for Private Subnet in AZ b
+resource "aws_route_table" "rt_private_2b" {
+  vpc_id = aws_vpc.project_vpc.id
+
+  route {
+    cidr_block     = "0.0.0.0/0"
+    nat_gateway_id = aws_nat_gateway.project_nat_gw_2b.id
+  }
+
+  tags = {
+    Name = "project-private-routing-table-2b"
   }
 }
 
@@ -126,7 +162,7 @@ resource "aws_route_table_association" "public_2a" {
 
 resource "aws_route_table_association" "private_2a" {
   subnet_id      = aws_subnet.project_vpc_subnet_private_2a.id
-  route_table_id = aws_route_table.project_private_routing_table.id
+  route_table_id = aws_route_table.rt_private_2a.id
 }
 
 resource "aws_route_table_association" "public_2b" {
@@ -134,8 +170,7 @@ resource "aws_route_table_association" "public_2b" {
   route_table_id = aws_route_table.project_public_routing_table.id
 }
 
-
 resource "aws_route_table_association" "private_2b" {
   subnet_id      = aws_subnet.project_vpc_subnet_private_2b.id
-  route_table_id = aws_route_table.project_private_routing_table.id
+  route_table_id = aws_route_table.rt_private_2b.id
 }
