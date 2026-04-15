@@ -33,14 +33,14 @@ After I got the Dockerfile up and running, I wanted to test the image in a more 
 I knew I couldn’t leave every Fargate task exposed to the internet. Not only is that a security risk, but it’s also impractical because if a task fails and is replaced, its IP address changes, requiring you to update it each time to access the service. Instead, I placed the tasks behind an ALB (Application Load Balancer). This way, the ALB serves as the only public entry point, while the tasks themselves run in private subnets and are accessible only through the load balancer. Unlike individual tasks, the ALB provides a stable endpoint that doesn’t change, making the setup far more reliable.
 
 From there, I built the infrastructure piece by piece:
-*VPC - Contains 4 subnets: a public and private subnet in us-east-2a, and a public and private subnet in us-east-2b
-*IGW - Allows traffic from the VPN to reach the internet. 
-*ALB - Spans the public subnets across both availability zones.
-*NAT GW - One in each public subnet, allowing private subnets to access the internet while keeping traffic within their respective availability zones and improving availability.
-*RTs - A shared public route table routes 0.0.0.0/0 to the IGW, while each private subnet has its own route table routing 0.0.0.0/0 to its local NAT Gateway.
-*ECS Cluster, Fargate Service, and task definitions define and run the containerized app. 
-*ECS Task Execution Role- Allows the task to authenticate with ECR and pull the container image.
-*Security Groups – Configured for both the ALB and ECS service so that only the ALB can communicate with the tasks.
+* VPC - Contains 4 subnets: a public and private subnet in us-east-2a, and a public and private subnet in us-east-2b
+* IGW - Allows traffic from the VPN to reach the internet. 
+* ALB - Spans the public subnets across both availability zones.
+* NAT GW - One in each public subnet, allowing private subnets to access the internet while keeping traffic within their respective availability zones and improving availability.
+* RTs - A shared public route table routes 0.0.0.0/0 to the IGW, while each private subnet has its own route table routing 0.0.0.0/0 to its local NAT Gateway.
+* ECS Cluster, Fargate Service, and task definitions define and run the containerized app. 
+* ECS Task Execution Role- Allows the task to authenticate with ECR and pull the container image.
+* Security Groups – Configured for both the ALB and ECS service so that only the ALB can communicate with the tasks.
 
 
 [PUSH AWS Architecture Picture to the Repo and put it in right here. Also reminder to remidwonload the image as last image was low resoultion. ]
