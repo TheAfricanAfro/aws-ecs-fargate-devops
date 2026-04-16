@@ -43,8 +43,7 @@ From there, I built the infrastructure piece by piece:
 * Security Groups – Configured for both the ALB and ECS service so that only the ALB can communicate with the tasks.
 
 
-<img width="3460" height="1800" alt="AWS_infrastructure" src="https://github.com/user-attachments/assets/b35d4bef-a34d-4905-9f18-e65df2ff0be6" />
-
+<img width="3460" height="1800" alt="AWS_infrastructure" src="https://github.com/user-attachments/assets/fdbd2e82-cbf8-4534-b997-e1def402d835" />
 
 
 ### Automating deployment with Github Actions
