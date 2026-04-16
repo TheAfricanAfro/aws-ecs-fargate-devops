@@ -67,7 +67,9 @@ aws ecs describe-task-definition \
 ```
 Then, I pushed the file to master. From that point onward, every push to master automatically deploys to ECS. Pretty cool, right? 
 
-[GithubActions Diagram Goes here. Reminder to upload it to the repo embed into the readme. Also make sure both pictures are the same resoultion otherwise it'll look weird on tehu repo. ]
+Here's an example of how that looks. 
+<img width="2380" height="1669" alt="Github Actions " src="https://github.com/user-attachments/assets/ea8dcdb0-c9b3-46bf-a18b-50efd10cc913" />
+
 
 
 
