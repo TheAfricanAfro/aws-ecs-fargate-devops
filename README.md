@@ -40,7 +40,7 @@ From there, I built the infrastructure piece by piece:
 * Virtual Private Cloud (VPC) - Contains 4 subnets: a public and private subnet in us-east-2a, and a public and private subnet in us-east-2b
 * Internet Gateway (IGW)  - Allows traffic from the VPN to reach the internet. 
 * Applicatoin Load Balancer (ALB) - Spans the public subnets across both availability zones.
-* NAT Gateway - One in each public subnet, allowing private subnets to access the internet while keeping traffic within their respective availability zones and improving availability.
+* NAT Gateways - One in each public subnet, allowing private subnets to access the internet while keeping traffic within their respective availability zones and improving availability.
 * Route Tables - A shared public route table routes 0.0.0.0/0 to the IGW, while each private subnet has its own route table routing 0.0.0.0/0 to its local NAT Gateway.
 * ECS Cluster, Fargate Service, and task definitions define and run the containerized app. 
 * ECS Task Execution Role- Allows the task to authenticate with ECR and pull the container image.
