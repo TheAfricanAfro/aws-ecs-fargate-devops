@@ -77,8 +77,12 @@ Here's an example of how that looks.
 
 
 
-##Lessons Learned:
+## Lessons Learned:
 
+Terraform does not recognize changes made outside of its state file. If modifications are made directly to AWS infrastructure outside of Terraform, Terraform will treat them as configuration drift and attempt to revert them during the next apply so that the actual infrastructure matches the state file. As a result, any changes introduced by GitHub Actions or Application Auto Scaling may be overwritten. That's why it's crucial to include the lifecycle block ignore_changes with the required arguments.
 
+Although the ECR repository is private, accessing its images still requires outbound internet connectivity. If the resources are in a private subnet, it’s probably easier to set up a NAT GW to handle this. At first, only one NAT Gateway was configured, which caused traffic from the second private subnet in AZ-b to route through AZ-a, creating a single point of failure and preventing resources in private subnet 2b from accessing the internet if AZ-a went down. In order to improve availability and resilience, I simply added another NAT GW to the other AZ, so that each AZ had its own NAT GW.
+
+The Application Auto Scaling service relies on CloudWatch metrics by default and does not require additional configuration to enable monitoring. Since the underlying infrastructure is already integrated with CloudWatch, no further changes to the VPC are necessary to collect container-level metrics. I found this quite interesting when reading the documentation about Application Auto Scaling, and it makes me wonder what other AWS services use other AWS services under the hood to get the job done.
 
 
