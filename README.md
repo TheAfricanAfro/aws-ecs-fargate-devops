@@ -73,7 +73,7 @@ aws ecs describe-task-definition \
 Then, I pushed the file to master. From that point onward, every push to master automatically deploys to ECS. Pretty cool, right? 
 
 Here's an example of how that looks. 
-![](images/Github-Actions .png)
+![](images/Github-Actions.png)
 
 
 
