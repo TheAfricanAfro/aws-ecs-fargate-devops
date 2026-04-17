@@ -47,18 +47,18 @@ From there, I built the infrastructure piece by piece:
 * Security Groups – Configured for both the ALB and ECS service so that only the ALB can communicate with the tasks.
 
 
-<img width="3460" height="1800" alt="AWS_infrastructure" src="https://github.com/user-attachments/assets/fdbd2e82-cbf8-4534-b997-e1def402d835" />
+<img  alt="AWS_infrastructure" src="https://github.com/user-attachments/assets/fdbd2e82-cbf8-4534-b997-e1def402d835" />
 
 
 After creating the core infrastructure, I added autoscaling so the ECS service could automatically handle increased load. I used Application Auto Scaling with a target tracking policy configured to maintain average CPU utilization at 70%, allowing the service to scale between 1 and 4 tasks. One important adjustment was updating the ECS service lifecycle configuration to ignore changes to desired_count, so Terraform wouldn’t overwrite scaling actions performed by Application Auto Scaling during the next apply. Without this, Terraform could attempt to revert the task count based on the state file. The same applies to the task definition file.
 
 Here's an example of how that process works: 
 
-<img width="3820" height="1800" alt="high load" src="https://github.com/user-attachments/assets/c6744527-1155-4354-931f-691ffe3ae2c8" />
+<img  alt="high load" src="https://github.com/user-attachments/assets/c6744527-1155-4354-931f-691ffe3ae2c8" />
 
-<img width="2060" height="1232" alt="CPU High" src="https://github.com/user-attachments/assets/5406554c-e763-4d33-81f6-3b34dd717b15" />
+<img  alt="CPU High" src="https://github.com/user-attachments/assets/5406554c-e763-4d33-81f6-3b34dd717b15" />
 
-<img width="2060" height="1232" alt="scaling" src="https://github.com/user-attachments/assets/b6564471-f239-479c-8a2a-4a9b9775deb0" />
+<img  alt="scaling" src="https://github.com/user-attachments/assets/b6564471-f239-479c-8a2a-4a9b9775deb0" />
 
 
 ### Automating deployment with Github Actions
@@ -72,7 +72,7 @@ aws ecs describe-task-definition \
 Then, I pushed the file to master. From that point onward, every push to master automatically deploys to ECS. Pretty cool, right? 
 
 Here's an example of how that looks. 
-<img width="2380" height="1669" alt="Github Actions " src="https://github.com/user-attachments/assets/ea8dcdb0-c9b3-46bf-a18b-50efd10cc913" />
+<img alt="Github Actions " src="https://github.com/user-attachments/assets/ea8dcdb0-c9b3-46bf-a18b-50efd10cc913" />
 
 
 
