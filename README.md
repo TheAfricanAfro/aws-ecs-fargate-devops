@@ -29,7 +29,7 @@ EXPOSE 4000
 
 CMD ["node", "dist/chip8_emulator/server/server.mjs"]
 ```
-.
+
 The base image pulls a specific Node version for compatibility. The Working directory gets set to /app, and then all packages are copied, and dependencies are installed. The project builds, port 4000 is exposed, and the server script is run.
 After I got the Dockerfile up and running, I wanted to test the image in a more realistic environment. I manually created an ECR repository, pushed the image up, and spun up a small ECS cluster with a task definition referencing the image. It ran successfully, giving me the confidence to start building the real infrastructure.
 
